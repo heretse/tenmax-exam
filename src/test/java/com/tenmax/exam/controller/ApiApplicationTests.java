@@ -1,4 +1,4 @@
-package com.tenmax.exam;
+package com.tenmax.exam.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -19,6 +19,7 @@ class ApiApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
+
 	/*
 	 * Test Hello API
 	 */
@@ -28,6 +29,16 @@ class ApiApplicationTests {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+	/*
+	 * Test getAdsByTitle API
+	 */
+	@Test
+	public void getAdsByTitle() throws Exception {
+		mockMvc.perform(get("/getAdsByTitle?title=vega"))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
 
 }
 

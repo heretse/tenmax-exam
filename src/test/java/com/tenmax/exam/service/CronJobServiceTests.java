@@ -1,4 +1,4 @@
-package com.tenmax.exam;
+package com.tenmax.exam.service;
 
 import java.util.List;
 
@@ -13,18 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-class MongoDBTests {
+class CronJobServiceTests {
 
     @Autowired
     private AdvertisesRepository advertisesRepository;
 
-	@Test
-	public void testAdvertisesRepositoryForMongoDB(){
-		List<Advertise> advertiseList = advertisesRepository.findAll();
-		System.out.printf("advertiseList's number:%d\n", advertiseList.size());
-
-		for (Advertise advertise : advertiseList) {
-			System.out.printf(advertise.toString());
-		}
-	}
 }

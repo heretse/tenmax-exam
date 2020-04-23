@@ -10,8 +10,6 @@ import java.net.URL;
 public class HttpUtil {
 
     public String get(String targetUrl) {
-        //return this.httpRequest("GET", targetUrl, "");
-
         HttpURLConnection connection = null;
         StringBuffer response = new StringBuffer("");
 
@@ -24,7 +22,7 @@ public class HttpUtil {
 
             int responseCode = connection.getResponseCode();
 
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(
                         connection.getInputStream(),"UTF-8"));
 
