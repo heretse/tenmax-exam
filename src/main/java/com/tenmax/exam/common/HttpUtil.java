@@ -1,4 +1,4 @@
-package com.tenmax.service.common;
+package com.tenmax.exam.common;
 
 import java.io.*;
 

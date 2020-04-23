@@ -5,7 +5,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.tenmax.service'
+group = 'com.tenmax.exam'
 version = '1.0.0'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'com.google.code.gson:gson:2.7'
 	compileOnly 'org.projectlombok:lombok:1.18.10'

@@ -1,36 +1,36 @@
-package com.tenmax.service.common;
+package com.tenmax.exam.service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.tenmax.service.model.Advertise;
-import com.tenmax.service.repo.AdvertisesRepository;
-import jdk.nashorn.internal.runtime.DebugLogger;
+import com.tenmax.exam.common.DeserializeJson;
+import com.tenmax.exam.common.HttpUtil;
+import com.tenmax.exam.model.Advertise;
+import com.tenmax.exam.repo.AdvertisesRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.concurrent.CompletableFuture;
 
 @Component
 public class CronJobService {
 
+    Logger logger = LoggerFactory.getLogger(CronJobService.class);
+
     @Autowired
     private AdvertisesRepository advertisesRepository;
 
     @Scheduled(cron = "1 * * * * ?")
     public void run() {
-        System.out.println("Current time in Run() :: " + Calendar.getInstance().getTime());
         CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
-            System.out.println("Current time in runAsync() :: " + Calendar.getInstance().getTime());
+            logger.debug("Current time in runAsync() :: " + Calendar.getInstance().getTime());
 
             String response = new HttpUtil().get("https://tenmax-mock-dsp.azurewebsites.net/api/getAds?code=s9Ybtsb6hwigndO6a5OwsLmXOPR0olrW7nBFFE7QmHfvaQ6p9GWXwg==");
 
-            System.out.println("response :: " + response);
-
-
+            logger.debug("response :: " + response);
 
             JsonObject jsonObject = DeserializeJson.toObject(response);
             JsonObject nativeObj = jsonObject.getAsJsonObject("native");
@@ -41,6 +41,7 @@ public class CronJobService {
             assetsArray.forEach(jsonElement -> {
                 JsonObject jsonObject1 = (JsonObject)jsonElement;
                 String type = jsonObject1.get("type").getAsString();
+
                 if ("description".equals(type)) {
                     newAdvertise.setDescription(jsonObject1.getAsJsonObject("data").get("value").getAsString());
                 } else if ("imageUrl".equals(type)) {

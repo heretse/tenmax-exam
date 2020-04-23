@@ -1,4 +1,4 @@
-package com.tenmax.service;
+package com.tenmax.exam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

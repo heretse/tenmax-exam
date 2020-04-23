@@ -1,9 +1,9 @@
-package com.tenmax.service;
+package com.tenmax.exam;
 
 import java.util.List;
 
-import com.tenmax.service.model.Advertise;
-import com.tenmax.service.repo.AdvertisesRepository;
+import com.tenmax.exam.model.Advertise;
+import com.tenmax.exam.repo.AdvertisesRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

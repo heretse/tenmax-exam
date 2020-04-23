@@ -1,4 +1,4 @@
-package com.tenmax.service.model;
+package com.tenmax.exam.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
