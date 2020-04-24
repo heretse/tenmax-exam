@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class HttpUtil {
 
-    public String get(String targetUrl) {
+    public static String get(String targetUrl) {
         HttpURLConnection connection = null;
         StringBuffer response = new StringBuffer("");
 

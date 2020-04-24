@@ -28,38 +28,18 @@ public class CronJobService {
         CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
             logger.debug("Current time in runAsync() :: " + Calendar.getInstance().getTime());
 
-            String response = new HttpUtil().get("https://tenmax-mock-dsp.azurewebsites.net/api/getAds?code=s9Ybtsb6hwigndO6a5OwsLmXOPR0olrW7nBFFE7QmHfvaQ6p9GWXwg==");
+            String response = HttpUtil.get("https://tenmax-mock-dsp.azurewebsites.net/api/getAds?code=s9Ybtsb6hwigndO6a5OwsLmXOPR0olrW7nBFFE7QmHfvaQ6p9GWXwg==");
 
             logger.debug("response :: " + response);
 
             JsonObject jsonObject = DeserializeJson.toObject(response);
-            JsonObject nativeObj = jsonObject.getAsJsonObject("native");
-            JsonArray assetsArray = nativeObj.getAsJsonArray("assets");
 
-            Advertise newAdvertise = new Advertise();
+            Advertise newAdvertise = AdvertiseService.parseFromJsonObject(jsonObject);
 
-            assetsArray.forEach(jsonElement -> {
-                JsonObject jsonObject1 = (JsonObject)jsonElement;
-                String type = jsonObject1.get("type").getAsString();
-
-                if ("description".equals(type)) {
-                    newAdvertise.setDescription(jsonObject1.getAsJsonObject("data").get("value").getAsString());
-                } else if ("imageUrl".equals(type)) {
-                    newAdvertise.setImageUrl(jsonObject1.getAsJsonObject("img").get("url").getAsString());
-                } else if ("title".equals(type)) {
-                    newAdvertise.setTitle(jsonObject1.getAsJsonObject("data").get("value").getAsString());
-                } else if ("iconUrl".equals(type)) {
-                    newAdvertise.setIconUrl(jsonObject1.getAsJsonObject("img").get("url").getAsString());
-                } else if ("clickUrl".equals(type)) {
-                    newAdvertise.setClickUrl(jsonObject1.getAsJsonObject("link").get("url").getAsString());
-                }
-            });
-
-            if (nativeObj.getAsJsonArray("impressionLink") != null) {
-                newAdvertise.setImpressionLink(nativeObj.getAsJsonArray("impressionLink").get(0).getAsString() );
+            if (newAdvertise != null) {
+                advertisesRepository.save(newAdvertise);
             }
 
-            advertisesRepository.save(newAdvertise);
         });
     }
 
