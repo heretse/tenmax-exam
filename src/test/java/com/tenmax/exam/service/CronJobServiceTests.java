@@ -24,7 +24,7 @@ class CronJobServiceTests {
         CronJobService cronJobService = new CronJobService();
         cronJobService.run();
 
-        PowerMockito.verifyStatic(VerificationModeFactory.calls(1));
+        PowerMockito.verifyStatic(HttpUtil.class, VerificationModeFactory.calls(1));
     }
 
 }

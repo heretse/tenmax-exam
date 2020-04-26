@@ -72,7 +72,7 @@ class SampleApiTests {
 	@Test
 
 	public void getAdsByTitle() throws Exception {
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/getAdsByTitle?title=工作").content(objectMapper.writeValueAsString(new ArrayList<Advertise>().add(advertise)))
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/getAdsByTitle?title=找工作").content(objectMapper.writeValueAsString(new ArrayList<Advertise>().add(advertise)))
 				.accept(MediaType.APPLICATION_JSON))
 				.andReturn();
 

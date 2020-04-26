@@ -11,6 +11,9 @@ version = '1.0.0'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
+ext.junitVersion = '4.12'
+ext.embedMongoVersion = '2.0.0'
+
 configurations {
 	developmentOnly
 	runtimeClasspath {
@@ -28,8 +31,9 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.7'
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testCompile "junit:junit:${junitVersion}"
+	testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: "${embedMongoVersion}"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testCompile group: 'junit', name: 'junit', version: '4.12'
 	testImplementation "org.mockito:mockito-all:1.10.19"
 	testImplementation "org.powermock:powermock-core:1.7.4"
 	testImplementation "org.powermock:powermock-api-mockito:1.7.4"
