@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = SampleApplication.class)
 @AutoConfigureMockMvc
-class SampleApiTests {
+class AdvertiseApiControllerTests {
 
 	@Autowired
 	private AdvertisesRepository advertisesRepository;

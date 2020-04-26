@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SampleApi{
+public class AdvertiseApiController {
 
     @Autowired
     AdvertisesRepository advertisesRepository;
