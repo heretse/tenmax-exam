@@ -27,18 +27,20 @@
         └── java
             └── com.tenmax.exam
                 └── com.tenmax.exam.common
-                    └── DataType.java
-                        DeserializeJson.java
-                        HttpUtil.java
+                    └── HttpUtil.java
                 └── com.tenmax.exam.Controller
                     └── AdvertiseApiController.java
                 └── com.tenmax.exam.model
                     └── Advertise.java
+                        Asset.java
+                        Data.java
+                        Image.java
+                        Link.java
+                        Native.java
                 └── com.tenmax.exam.repo
                     └── AdvertisesRepository.java
                 └── com.tenmax.exam.service
-                    └── AdvertiseService.java
-                        CronJobService.java
+                    └── CronJobService.java
 ```
 
 * Project Description
@@ -47,23 +49,11 @@
     - Use CompletableFuture for asynchronous processing request
     ```
     @Scheduled(cron = "1 * * * * ?")
-        public void run() {
-            CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
-                logger.debug("Current time in runAsync() :: " + Calendar.getInstance().getTime());
-    
-                String response = HttpUtil.get("https://tenmax-mock-dsp.azurewebsites.net/api/getAds?code=s9Ybtsb6hwigndO6a5OwsLmXOPR0olrW7nBFFE7QmHfvaQ6p9GWXwg==");
-    
-                logger.debug("response :: " + response);
-    
-                JsonObject jsonObject = DeserializeJson.toObject(response);
-    
-                Advertise newAdvertise = AdvertiseService.parseFromJsonObject(jsonObject);
-    
-                if (newAdvertise != null) {
-                    advertisesRepository.save(newAdvertise);
-                }
-    
-            });
+    public void run() {
+        CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
+            fetchAdvertise(new HttpUtil());
+        });
+    }
     ```
   
 * API Description
@@ -73,7 +63,7 @@
         ```
         @Repository
         public interface AdvertisesRepository extends MongoRepository<Advertise, String> {
-            @Query("{title:{'$regex': ?0, '$options' : 'i'}}")
+            @Query("{'$and': [{ '_native.assets.type': 'title'}, { '_native.assets.data.value': { '$regex': '?0', '$options' : 'i' }}]}")
             public List<Advertise> findByTitle(String title);
         }
         ```
@@ -113,16 +103,23 @@
   
     - Use MockMvc to perform a GET request  
     ```
-    mvc.perform(get("/getAdsByTitle?title=找工作")
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content()
-                            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.result.length()").value(2))
-                    .andDo(result -> {
-                        result.getResponse().setCharacterEncoding("UTF-8");
-                        System.out.println(result.getResponse().getContentAsString());
-                    });
+    @Test
+    public void givenAdvertises_whenGetAdvertisesByTitle_thenStatus200() throws Exception {
+
+        svaeTesingData();
+
+        mvc.perform(get("/getAdsByTitle?title=浪漫下午茶")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.result.length()").value(2))
+                .andDo(result -> {
+                    result.getResponse().setCharacterEncoding("UTF-8");
+                    System.out.println(result.getResponse().getContentAsString());
+                });
+
+    }
     ```
   
 * Build docker image

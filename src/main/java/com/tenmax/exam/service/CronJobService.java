@@ -1,7 +1,7 @@
 package com.tenmax.exam.service;
 
-import com.google.gson.JsonObject;
-import com.tenmax.exam.common.DeserializeJson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tenmax.exam.common.HttpUtil;
 import com.tenmax.exam.model.Advertise;
 import com.tenmax.exam.repo.AdvertisesRepository;
@@ -26,6 +26,9 @@ public class CronJobService {
     @Autowired
     private AdvertisesRepository advertisesRepository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Scheduled(cron = "1 * * * * ?")
     public void run() {
         CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
@@ -36,13 +39,16 @@ public class CronJobService {
     protected boolean fetchAdvertise(HttpUtil httpUtil) {
         logger.debug("Current time in runAsync() :: " + Calendar.getInstance().getTime());
 
-        String response = httpUtil.get(this.advertiseFetchPath);
+        String json = httpUtil.get(this.advertiseFetchPath);
 
-        logger.debug("response :: " + response);
+        logger.debug("response :: " + json);
 
-        JsonObject jsonObject = DeserializeJson.toObject(response);
-
-        Advertise newAdvertise = AdvertiseService.parseFromJsonObject(jsonObject);
+        Advertise newAdvertise = null;
+        try {
+            newAdvertise = objectMapper.readValue(json, Advertise.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         if (newAdvertise != null) {
             advertisesRepository.save(newAdvertise);

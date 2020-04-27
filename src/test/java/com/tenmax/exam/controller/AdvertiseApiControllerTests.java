@@ -2,7 +2,7 @@ package com.tenmax.exam.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tenmax.exam.SampleApplication;
-import com.tenmax.exam.model.Advertise;
+import com.tenmax.exam.model.*;
 import com.tenmax.exam.repo.AdvertisesRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,13 +43,45 @@ class AdvertiseApiControllerTests {
 	@BeforeEach
 	public void setUp() {
 		advertise = new Advertise();
-		advertise.setClickUrl("//tenmaximg.cacafly.net/upload/2/3/8/1/4/790f81ec_icon.jpg?v=1");
-		advertise.setDescription("萬事起頭難，想找工作不知道怎麼開始嗎？1111中台灣快速設定想要的工作條件，讓你輕鬆找到符合自己的工作！");
-		advertise.setIconUrl("https://www.tenmax.io");
-		advertise.setId("5ea04e1dd50e1f22f5e4ed50");
-		advertise.setImageUrl("//tenmaximg.cacafly.net/upload/2/3/8/1/4/790f81ec.jpg?v=1");
-		advertise.setImpressionLink("https://beta-rtb.tenmax.io/bid/asiamax/impreWithPrice/1573488002834/522c36a1-049c-11ea-b603-bd9939e8cf90/23785/23814/null/${WINNING_PRICE}/?optInfo=xlKYg0XrXsSg1g");
-		advertise.setTitle("求職找工作，我該怎麼選？推薦《行政後勤＋週休六日》");
+		Native _native = new Native();
+
+		Asset description = new Asset();
+		Data descriptionData = new Data();
+		descriptionData.setValue("萬事起頭難，想找工作不知道怎麼開始嗎？1111中台灣快速設定想要的工作條件，讓你輕鬆找到符合自己的工作！");
+		description.setType("description");
+		description.setData(descriptionData);
+
+		Asset imageUrl = new Asset();
+		Image img4ImageUrl = new Image();
+		img4ImageUrl.setH(627);
+		img4ImageUrl.setUrl("//tenmaximg.cacafly.net/upload/2/3/8/1/4/790f81ec.jpg?v=1");
+		img4ImageUrl.setW(1200);
+		imageUrl.setType("imageUrl");
+		imageUrl.setImg(img4ImageUrl);
+
+		Asset title = new Asset();
+		Data titleData = new Data();
+		titleData.setValue("求職找工作，我該怎麼選？推薦《行政後勤＋週休六日》");
+		title.setType("title");
+		title.setData(titleData);
+
+		Asset iconUrl = new Asset();
+		Image img4IconUrl = new Image();
+		img4IconUrl.setH(250);
+		img4IconUrl.setUrl("//tenmaximg.cacafly.net/upload/2/3/8/1/4/790f81ec_icon.jpg?v=1");
+		img4IconUrl.setW(250);
+		iconUrl.setType("iconUrl");
+		imageUrl.setImg(img4IconUrl);
+
+		Asset clickUrl = new Asset();
+		Link link = new Link();
+		link.setUrl("https://www.tenmax.io");
+		clickUrl.setType("clickUrl");
+		clickUrl.setLink(link);
+
+		_native.setAssets(new Asset[]{description, imageUrl, title, iconUrl, clickUrl});
+		_native.setImpressionLink(new String[]{"https://beta-rtb.tenmax.io/bid/asiamax/impreWithPrice/1573488002834/522c36a1-049c-11ea-b603-bd9939e8cf90/23785/23814/null/${WINNING_PRICE}/?optInfo=xlKYg0XrXsSg1g"});
+		advertise.setNative(_native);
 
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
