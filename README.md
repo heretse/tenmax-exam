@@ -48,6 +48,11 @@
     
             });
     ```
+* API Description
+    - Get advertise by title and support wild card search
+        * GET: /getAdsByTitle?title=?
+    - Get random advertise data
+        * GET: /getAds
 
 * Integration Testing with Embedded MongoDB
 

@@ -33,11 +33,15 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testCompile "junit:junit:${junitVersion}"
 	testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: "${embedMongoVersion}"
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation "org.mockito:mockito-all:1.10.19"
-	testImplementation "org.powermock:powermock-core:1.7.4"
-	testImplementation "org.powermock:powermock-api-mockito:1.7.4"
-	testImplementation "org.powermock:powermock-module-junit4:1.7.4"
+//	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompile "org.mockito:mockito-core:2.24.0"
+	testCompile ("org.springframework.boot:spring-boot-starter-test") {
+		exclude group: "org.mockito", module: "mockito-all"
+	}
+//	testImplementation "org.powermock:powermock-core:1.7.4"
+//	testImplementation "org.powermock:powermock-api-mockito:1.7.4"
+//	testImplementation "org.powermock:powermock-module-junit4:1.7.4"
 }
 
 test {

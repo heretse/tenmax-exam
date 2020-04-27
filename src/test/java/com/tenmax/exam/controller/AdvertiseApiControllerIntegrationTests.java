@@ -27,10 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SampleApplication.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-
 public class AdvertiseApiControllerIntegrationTests {
-
-    private static final String DATABASE_NAME = "test";
 
     @Autowired
     private MockMvc mvc;

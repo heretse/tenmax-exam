@@ -9,8 +9,21 @@ public class AdvertiseService {
 
     public static Advertise parseFromJsonObject(JsonObject jsonObject) {
 
+        if (jsonObject == null) {
+            return null;
+        }
+
         JsonObject nativeObj = jsonObject.getAsJsonObject("native");
+
+        if (nativeObj == null) {
+            return null;
+        }
+
         JsonArray assetsArray = nativeObj.getAsJsonArray("assets");
+
+        if (assetsArray == null) {
+            return null;
+        }
 
         Advertise newAdvertise = new Advertise();
 
