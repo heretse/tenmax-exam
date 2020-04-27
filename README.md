@@ -3,6 +3,23 @@
 [![Build Status](https://travis-ci.org/heretse/tenmax-exam.svg?branch=master)](https://travis-ci.org/heretse/tenmax-exam)
 [![Code Coverage](https://img.shields.io/codecov/c/github/heretse/tenmax-exam/master.svg)](https://codecov.io/github/heretse/tenmax-exam?branch=master)
 
+* Project Status
+    - Basic Quiz
+        * Parsing data from the specific API and insert into MongoDB - 100%
+        * Implement a REST API supporting wildcard search by title   - 100%
+    - Advanced Quiz
+        * Implement a mock API with 10 seconds of latency - 100%
+        * Parsing data from the specific API with CompletableFuture and 5 second of timeout - 100%  
+    - Others
+        * Integrated with Travis CI - 100%
+        * Unit Test
+            - Code coverage - See above badge
+            - Integrate with CodeCov - 100% 
+        * Integration Test
+            - Test for the basic quiz with embedded MongoDB - 100%
+            - Test for the advanced quiz - 30%
+        * Support docker build - 100%  
+        
 * Project Structure
 ```
 └── src

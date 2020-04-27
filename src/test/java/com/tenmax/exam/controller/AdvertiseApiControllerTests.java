@@ -70,7 +70,6 @@ class AdvertiseApiControllerTests {
 	 * Test getAdsByTitle API
 	 */
 	@Test
-
 	public void getAdsByTitle() throws Exception {
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/getAdsByTitle?title=找工作").content(objectMapper.writeValueAsString(new ArrayList<Advertise>().add(advertise)))
 				.accept(MediaType.APPLICATION_JSON))
@@ -81,5 +80,17 @@ class AdvertiseApiControllerTests {
 		Assert.assertEquals("錯誤",200, status);
 	}
 
+	/*
+	 * Test getAds API
+	 */
+	public void getAds() throws Exception {
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/getAds").content("{\"native\":{\"assets\":[{\"type\":\"description\",\"data\":{\"value\":\"即日起至2019/12/31，報名參加可樂旅遊出發之韓國樂天世界指定行程，即可獲得抽獎機會！\"}},{\"type\":\"imageUrl\",\"img\":{\"url\":\"//tenmaximg.cacafly.net/upload/2/3/2/1/4/09f9464b.jpg?v=1\",\"w\":1200,\"h\":627}},{\"type\":\"title\",\"data\":{\"value\":\"瘋玩韓國樂天世界 即有機會抽中iPhone 11 Pro\"}},{\"type\":\"iconUrl\",\"img\":{\"url\":\"//tenmaximg.cacafly.net/upload/2/3/2/1/4/09f9464b_icon.jpg?v=1\",\"w\":250,\"h\":250}},{\"type\":\"clickUrl\",\"link\":{\"url\":\"https://www.tenmax.io\"}}],\"impressionLink\":[\"https://beta-rtb.tenmax.io/bid/asiamax/impreWithPrice/1573488002883/5233b0b3-049c-11ea-b603-bd9939e8cf90/22633/23214/null/${WINNING_PRICE}/?optInfo=xlKYgRwutql5\"]}}")
+				.accept(MediaType.APPLICATION_JSON))
+				.andReturn();
+
+		int status = result.getResponse().getStatus();
+
+		Assert.assertEquals("錯誤",200, status);
+	}
 }
 
