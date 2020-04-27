@@ -65,11 +65,43 @@
     
             });
     ```
+  
 * API Description
     - Get advertise by title and support wild card search
         * GET: /getAdsByTitle?title=?
+        * Implement wildcard search by regular expression settings 
+        ```
+        @Repository
+        public interface AdvertisesRepository extends MongoRepository<Advertise, String> {
+            @Query("{title:{'$regex': ?0, '$options' : 'i'}}")
+            public List<Advertise> findByTitle(String title);
+        }
+        ```
     - Get random advertise data
         * GET: /getAds
+        * Implement request with 0 or 10 seconds of latency by Callable
+        ```
+        @GetMapping(value = "/getAds", produces = "application/json;charset=UTF-8")
+            public Callable<String> echoHelloWorld()
+            {
+                boolean skip = (random.nextInt(2) == 0);
+        
+                return () ->
+                {
+                    if (skip) {
+                        try {
+                            Thread.sleep(10 * 1000);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        } finally {
+                             return "{}";
+                        }
+                    } else {
+                        return fakeData[random.nextInt(fakeData.length)];
+                    }
+                };
+            }
+        ``` 
 
 * Integration Testing with Embedded MongoDB
 
