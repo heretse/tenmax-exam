@@ -31,9 +31,15 @@ public class CronJobService {
 
     @Scheduled(cron = "1 * * * * ?")
     public void run() {
-        CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
+        CompletableFuture<Void> cf1 = CompletableFuture.runAsync(() -> {
             fetchAdvertise(new HttpUtil());
         });
+
+        CompletableFuture<Void> cf2 = CompletableFuture.runAsync(() -> {
+            fetchAdvertise(new HttpUtil());
+        });
+
+        new CompletableFuture<Void>().anyOf(cf1, cf2);
     }
 
     protected boolean fetchAdvertise(HttpUtil httpUtil) {

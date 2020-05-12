@@ -33,7 +33,7 @@ public class HttpUtil {
                 reader.close();
             }
 
-            connection.disconnect();
+
 
         } catch (MalformedURLException e) {
             throw e;
@@ -42,6 +42,9 @@ public class HttpUtil {
         } catch (IOException e) {
             throw e;
         } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
             return response.toString();
         }
     }

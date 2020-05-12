@@ -60,31 +60,6 @@ public class AdvertiseApiController {
         return map;
     }
 
-//    @GetMapping(value = "/getAds", produces = "application/json;charset=UTF-8")
-//    public ResponseBodyEmitter getAds()
-//    {
-//        ResponseBodyEmitter emitter = new ResponseBodyEmitter();
-//
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//
-//        executor.execute(() -> {
-//            try {
-//                emitter.send(
-//                        fakeData[random.nextInt(fakeData.length)],
-//                        MediaType.APPLICATION_JSON);
-//                emitter.complete();
-//            }
-//            catch (IOException e)
-//            {
-//                emitter.completeWithError(e);
-//                return;
-//            }
-//        });
-//
-//        executor.shutdown();
-//        return emitter;
-//    }
-
     @GetMapping(value = "/getAds", produces = "application/json;charset=UTF-8")
     public Callable<String> echoHelloWorld()
     {
